@@ -1,0 +1,10 @@
+[
+    {
+        "imagePrompt" : "small cat playing with a ball",
+        "textForSpeech" : " the small cat playing with a ball"
+    },
+    {
+        "imagePrompt" : "small dog playing with a ball",
+        "textForSpeech" : " the small dog playing with a ball"
+    }
+]
