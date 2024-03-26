@@ -1,0 +1,23 @@
+{
+  "name": "mass_video_gen_node2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "run": "node dist/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-polly": "^3.529.1",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
+    "@types/node": "^20.11.25",
+    "typescript": "^5.4.2"
+  },
+  "type":"module"
+}
