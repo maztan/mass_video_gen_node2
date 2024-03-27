@@ -1,11 +1,10 @@
-import { ImageGenerator } from "./image_generator.js"
+import { IImageGenerator } from "./image_generator.js"
 import fs from 'fs';
 import path from 'path';
 
-export class ImageGeneratorStub implements ImageGenerator {
-    getImageForPrompt(prompt: string){
+export class ImageGeneratorStub implements IImageGenerator {
+    getImageForPrompt(prompt: string, outFilePath: string){
         throw new Error("not implemented");
-        return "";
     }
 
     getImagesForPrompts(prompts: string[]) {

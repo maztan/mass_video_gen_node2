@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-export interface InputDefinitionEntry {
+export interface IInputDefinitionEntry {
     /**
      * The prompt to be used to generate image
      */
@@ -11,12 +11,26 @@ export interface InputDefinitionEntry {
     textForSpeech: string;
 }
 
-export interface InputDefinition {
-    Definitions: InputDefinitionEntry[];
+export class InputDefinitions {
+    definitions: IInputDefinitionEntry[] = [];
+
+    [Symbol.iterator]() {
+        let index = 0;
+        const items = this.definitions;
+        return {
+            next(): IteratorResult<IInputDefinitionEntry> {
+                if (index < items.length) {
+                    return { value: items[index++], done: false };
+                } else {
+                    return { value: undefined, done: true };
+                }
+            }
+        };
+    }
 }
 
 export abstract class InputDefinitionHelper {
-    static loadInputDefinitions(inputFilePath: string): InputDefinition | null {
+    static loadInputDefinitions(inputFilePath: string): InputDefinitions | null {
         try {
             // Read the file synchronously
             const data: string = fs.readFileSync(inputFilePath, 'utf8');

@@ -1,5 +1,4 @@
-import { synthesizeSpeech } from "./aws_polly_tts.js";
-import { ImageGenerator } from "./image_generator.js";
+import { IImageGenerator } from "./image_generator.js";
 import { ImageGeneratorStub } from "./image_generator_from_local_files.js";
 import { InputDefinitionHelper } from "./input_definition.js";
 
