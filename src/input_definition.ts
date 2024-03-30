@@ -31,16 +31,10 @@ export class InputDefinitions {
 
 export abstract class InputDefinitionHelper {
     static loadInputDefinitions(inputFilePath: string): InputDefinitions | null {
-        try {
-            // Read the file synchronously
-            const data: string = fs.readFileSync(inputFilePath, 'utf8');
-            // Parse the JSON data
-            const jsonData: any = JSON.parse(data);
-            return jsonData;
-        } catch (error) {
-            // Handle any errors
-            console.error('An error occurred:', error);
-            return null;
-        }
+        // Read the file synchronously
+        const data: string = fs.readFileSync(inputFilePath, 'utf8');
+        // Parse the JSON data
+        const jsonData: InputDefinitions = JSON.parse(data);
+        return jsonData;
     }
 }
