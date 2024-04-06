@@ -1,0 +1,1 @@
+Creates video from input prompts for AI image generation (JSON input) with audio overlay using Amazon Polly TTS.
