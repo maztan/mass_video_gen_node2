@@ -22,7 +22,7 @@ export abstract class FfmpegHelper {
         let inputIndex = 0;
 
         for (const imageFilePath of inputImageFilesPaths) {
-            let line = `[${inputIndex}:v]zoompan=z='min(zoom+0.0015,1.5)':d=25*${audioFileLengths[inputIndex]}:s=1280x720`; //d=25*5 would mean 25fps for 5 seconds
+            let line = `[${inputIndex}:v]zoompan=z='min(zoom+0.0015,1.5)':d=25*${audioFileLengths[inputIndex]}:s=1280x720:fps=25`; //d=25*5 would mean 25fps for 5 seconds
             if (inputIndex == 0) {
                 line += ",fade=t=in:st=0:d=1";
             }
@@ -37,7 +37,7 @@ export abstract class FfmpegHelper {
         let i = 0;
         for(const audioFilePath of inputAudioFilesPaths){
             const line = `[${inputIndex}:a]acopy[a${i}]`;
-            //complexFilter.push(line);
+            complexFilter.push(line);
             inputIndex += 1;
             i+=1;
         }
@@ -45,12 +45,12 @@ export abstract class FfmpegHelper {
         let outputDefString = "";
         // concatenate into one output
         for (let i = 0; i < inputImageFilesPaths.length; i += 1) {
-            outputDefString += `[v${i}]`; //since the number of video/image and audio inputs is the same, we can use the pairs of video/audio like this
-            //outputDefString += `[v${i}][a${i}]`; //since the number of video/image and audio inputs is the same, we can use the pairs of video/audio like this
+            //outputDefString += `[v${i}]`; //since the number of video/image and audio inputs is the same, we can use the pairs of video/audio like this
+            outputDefString += `[v${i}][a${i}]`; //since the number of video/image and audio inputs is the same, we can use the pairs of video/audio like this
         }
 
-        outputDefString += `concat=n=${inputImageFilesPaths.length}:v=1:a=1`;
-        outputDefString += ',format=yuv420p[v]'; //"${outputFilePath}
+        outputDefString += `concat=n=${inputImageFilesPaths.length}:v=1:a=1[vConcat][a];`;
+        outputDefString += '[vConcat]format=yuv420p[v]'; //"${outputFilePath}
 
         complexFilter.push(outputDefString);
 
@@ -72,9 +72,10 @@ export abstract class FfmpegHelper {
         }
 
         
-            f.complexFilter(complexFilter/*, 'out'*/)
+            f.complexFilter('"' + complexFilter + '"'/*, 'out'*/)
             //.addOption('-filter_complex', complexFilter)
             .addOption('-map', '[v]',)
+            .addOption('-map', '[a]',)
             .addOption('-c:v', 'libx264')
             .addOption('-t', '30')
             .output(outputFilePath)
